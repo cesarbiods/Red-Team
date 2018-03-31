@@ -8,6 +8,48 @@ const Player = require('../entities/Player')
  */
 const _ = require('lodash')
 
+describe('New letters tests', () => {
+  const gm = new GameManager()
+
+  const lettersUsed1 = 1
+  const lettersUsed2 = 4
+  const lettersUsed3 = 7
+
+  const array1 = gm.getNewLetters(lettersUsed1)
+  const array2 = gm.getNewLetters(lettersUsed2)
+  const array3 = gm.getNewLetters(lettersUsed3)
+
+  it('Array1 has ' + lettersUsed1 + ' elements', () => {
+    expect(array1.length).toEqual(lettersUsed1)
+  })
+
+  it('Array2 has ' + lettersUsed2 + ' elements', () => {
+    expect(array2.length).toEqual(lettersUsed2)
+  })
+
+  it('Array3 has ' + lettersUsed3 + ' elements', () => {
+    expect(array3.length).toEqual(lettersUsed3)
+  })
+
+  it('Array1 contains only letters', () => {
+    for (let i = 0; i < array1.length; ++i) {
+      expect(array1[i].match(/[a-z]/i).length).toEqual(1)
+    }
+  })
+
+  it('Array2 contains only letters', () => {
+    for (let i = 0; i < array2.length; ++i) {
+      expect(array2[i].match(/[a-z]/i).length).toEqual(1)
+    }
+  })
+
+  it('Array3 contains only letters', () => {
+    for (let i = 0; i < array3.length; ++i) {
+      expect(array3[i].match(/[a-z]/i).length).toEqual(1)
+    }
+  })
+})
+
 describe('Gameboard tests', () => {
   it('Gameboard should be created', () => {
     expect(new GB()).toBeTruthy()
