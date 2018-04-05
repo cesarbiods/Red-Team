@@ -51,6 +51,7 @@ public class AI extends Player {
                         //remove tiles from hand
                         removeTilesFromHand(bestPlay);
                         GameManager.getInstance().updatePlayers(GameManager.getInstance().thePlayers);
+                        state = 2;
                     }else{
                         GameManager.getInstance().updatePlayers(GameManager.getInstance().thePlayers);
                         tiles = GameManager.getInstance().getNewHand();
@@ -165,19 +166,41 @@ public class AI extends Player {
             }).on("dataUpdate", new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
-                    System.out.println(" got dataUpdate");
+                    System.out.println("got dataUpdate");
                     try {
                         JSONObject data = (JSONObject) args[0];
                         System.out.println(data.toString());
-//                        Player response = (Player) data.get("state");
-//                        if (response.isAI) {
-                            //clear cache
+                        boolean myTurn = data.getBoolean("isTurn");
+                        JSONArray jsonTiles = data.getJSONArray("tiles");
+                        char[] newTiles = new char[jsonTiles.length()];
+                        String test = jsonTiles.toString();
+                        for(int i = 0; i < newTiles.length; i++){
+                            newTiles[i] = jsonTiles.getString(i).charAt(0);
+                            System.out.print(newTiles[i]);
+                        }
+
+                        //reconnect an AI
+                        //System.out.println(myTurn);
+                        if (myTurn) {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            tiles = GameManager.getInstance().getNewHand();
                             myCache.Clear();
-//                        }
-//                        else{
-//                            disconnectAI();
-//                        }
-                    } catch (Exception e) {
+                            TESTFindPlays(GameManager.getInstance().theBoard);
+                            state = 1;
+                            tiles = GameManager.getInstance().getNewHand();
+                            GameManager.getInstance().updatePlayers(GameManager.getInstance().thePlayers);
+                        }
+                        else{
+                            state = 0;
+                        }
+                        update();
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
@@ -202,7 +225,7 @@ public class AI extends Player {
                             e.printStackTrace();
                         }
                 }
-            }).on("dataUpdate", new Emitter.Listener() {
+            })/*.on("dataUpdate", new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
                     System.out.println("got dataUpdate");
@@ -210,15 +233,23 @@ public class AI extends Player {
                         JSONObject data = (JSONObject) args[0];
                         System.out.println(data.toString());
                         boolean myTurn = data.getBoolean("isTurn");
+                        JSONArray jsonTiles = data.getJSONArray("tiles");
+                        char[] newTiles = new char[jsonTiles.length()];
+                        //String test = jsonTiles.toString();
+                        System.out.println();
+                        for(int i = 0; i < newTiles.length; i++){
+                            newTiles[i] = jsonTiles.getString(i).charAt(0);
+                            System.out.print(newTiles[i]);
+                        }
+
                         //reconnect an AI
-                        System.out.println(myTurn);
+                        //System.out.println(myTurn);
                         if (myTurn) {
-                            /*
                             try {
-                                Thread.sleep(1000);
+                                Thread.sleep(10000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
-                            }*/
+                            }
                             tiles = GameManager.getInstance().getNewHand();
                             myCache.Clear();
                             TESTFindPlays(GameManager.getInstance().theBoard);
@@ -233,7 +264,7 @@ public class AI extends Player {
                         e.printStackTrace();
                     }
                 }
-            }).on("playWord", new Emitter.Listener() {
+            })*/.on("playWord", new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
                     System.out.println(" got playWord");

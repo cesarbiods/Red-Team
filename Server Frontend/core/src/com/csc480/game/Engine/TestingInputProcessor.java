@@ -88,8 +88,8 @@ public class TestingInputProcessor implements InputProcessor {
             Arrays.fill(constraints,(char)0);
             ArrayList<String> results = WordVerification.getInstance().getWordsFromHand(hand,constraints, 5);
             System.out.println("finding all possible words took nanos: "+(System.nanoTime()-startTime));
-            for (String s : results)
-                System.out.println(s);
+            //for (String s : results)
+                //System.out.println(s);
 
         }else if(character == ']'){
             System.out.println("AI TEST YOUR THING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
